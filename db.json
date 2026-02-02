@@ -1,0 +1,23 @@
+{
+  "categories": [
+    {
+      "id": "1",
+      "name": "Génération d'image"
+    },
+    {
+      "id": "2",
+      "name": "Posts LinkedIn"
+    }
+  ],
+  "prompts": [
+    {
+      "id": "1",
+      "title": "Titre du prompt",
+      "content": "Texte du prompt IA...",
+      "categoryId": 1,
+      "upvotes": 19,
+      "downvotes": 10,
+      "createdAt": "2025-02-01T12:00:00.000Z"
+    }
+  ]
+}

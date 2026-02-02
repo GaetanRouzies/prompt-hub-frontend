@@ -1,0 +1,31 @@
+<div class="flex flex-column gap-3">
+  <div class="flex align-items-center gap-2 flex-wrap">
+    <label class="font-semibold">Filtrer par catégorie</label>
+    <p-select
+      [options]="(categories$ | async) ?? []"
+      optionLabel="name"
+      optionValue="id"
+      [(ngModel)]="selectedCategoryId"
+      placeholder="Toutes"
+      [showClear]="true"
+      class="w-full"
+    />
+  </div>
+  <div class="grid">
+    @for (prompt of (filteredPrompts$ | async) ?? []; track prompt.id) {
+      <div class="col-12 md:col-6 lg:col-4">
+        <app-prompt-card
+          [prompt]="prompt"
+          [category]="getCategory(prompt.categoryId)"
+          (voted)="onVoted()"
+        />
+      </div>
+    } @empty {
+      <div class="col-12">
+        <p-card>
+          <p class="m-0 text-color-secondary">Aucun prompt pour le moment.</p>
+        </p-card>
+      </div>
+    }
+  </div>
+</div>

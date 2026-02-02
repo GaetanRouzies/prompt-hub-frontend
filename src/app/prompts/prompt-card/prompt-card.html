@@ -1,0 +1,28 @@
+<p-card>
+  <div class="flex flex-column gap-2">
+    <div class="flex align-items-center justify-content-between gap-2 flex-wrap">
+      <h3 class="m-0 text-lg font-semibold">{{ prompt().title }}</h3>
+      @if (category(); as cat) {
+        <p-tag [value]="cat.name" severity="secondary" />
+      }
+    </div>
+    <p class="m-0 text-color-secondary line-height-3">{{ contentPreview() }}</p>
+    <div class="flex align-items-center justify-content-between gap-2 flex-wrap">
+      <div class="flex align-items-center gap-2">
+        <span class="font-semibold">{{ score() }}</span>
+        <span class="text-color-secondary text-sm">score</span>
+        <p-button
+          icon="pi pi-thumbs-up"
+          [loading]="voting"
+          (onClick)="upvote()"
+        />
+        <p-button
+          icon="pi pi-thumbs-down"
+          [loading]="voting"
+          (onClick)="downvote()"
+        />
+      </div>
+      <p-button [routerLink]="['/prompts', prompt().id, 'edit']" label="Modifier" icon="pi pi-pencil" class="p-button-sm"></p-button>
+    </div>
+  </div>
+</p-card>

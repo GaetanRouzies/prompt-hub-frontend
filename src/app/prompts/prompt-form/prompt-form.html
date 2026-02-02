@@ -1,0 +1,44 @@
+@if (loading()) {
+  <p class="flex align-items-center gap-2">
+    <i class="pi pi-spin pi-spinner"></i>
+    Chargement…
+  </p>
+} @else {
+  <p-card [header]="id() ? 'Modifier le prompt' : 'Nouveau prompt'">
+    <form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-column gap-3">
+      <div class="flex flex-column gap-2">
+        <label for="title">Titre</label>
+        <input pInputText id="title" formControlName="title" class="w-full" />
+        @if (form.controls.title.invalid && form.controls.title.touched) {
+          <small class="p-error">Le titre est requis (max 200 caractères).</small>
+        }
+      </div>
+      <div class="flex flex-column gap-2">
+        <label for="content">Contenu</label>
+        <textarea pTextarea id="content" formControlName="content" rows="6" class="w-full"></textarea>
+        @if (form.controls.content.invalid && form.controls.content.touched) {
+          <small class="p-error">Le contenu est requis.</small>
+        }
+      </div>
+      <div class="flex flex-column gap-2">
+        <label for="category">Catégorie</label>
+        <p-select
+          id="category"
+          formControlName="categoryId"
+          [options]="categories()"
+          optionLabel="name"
+          optionValue="id"
+          placeholder="Choisir une catégorie"
+          class="w-full"
+        />
+        @if (form.controls.categoryId.invalid && form.controls.categoryId.touched) {
+          <small class="p-error">La catégorie est requise.</small>
+        }
+      </div>
+      <div class="flex gap-2">
+        <p-button type="submit" [label]="id() ? 'Enregistrer' : 'Créer'" [loading]="submitting()" icon="pi pi-check"></p-button>
+        <p-button type="button" label="Annuler" severity="secondary" routerLink="/prompts"></p-button>
+      </div>
+    </form>
+  </p-card>
+}
