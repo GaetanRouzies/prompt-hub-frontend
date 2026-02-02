@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "angular-prompt-hub": {
+    "prompt-hub-frontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -67,10 +67,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "angular-prompt-hub:build:production"
+              "buildTarget": "prompt-hub-frontend:build:production"
             },
             "development": {
-              "buildTarget": "angular-prompt-hub:build:development"
+              "buildTarget": "prompt-hub-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"

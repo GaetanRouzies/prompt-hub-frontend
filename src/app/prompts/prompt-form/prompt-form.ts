@@ -63,7 +63,7 @@ export class PromptFormComponent {
           this.form.patchValue({
             title: p.title,
             content: p.content,
-            categoryId: p.categoryId
+            categoryId: p.category.id
           });
           this.loading.set(false);
         },

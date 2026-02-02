@@ -6,7 +6,30 @@
         <p-tag [value]="cat.name" severity="secondary" />
       }
     </div>
-    <p class="m-0 text-color-secondary line-height-3">{{ contentPreview() }}</p>
+    <div class="prompt-content-wrapper">
+      <textarea
+        pTextarea
+        class="prompt-textarea w-full text-sm"
+        [rows]="expanded() ? 16 : 4"
+        [ngModel]="prompt().content"
+        readonly
+      ></textarea>
+      <div class="flex align-items-center gap-1 mt-1">
+        <p-button
+          [label]="expanded() ? 'Réduire' : 'Lire la suite'"
+          [icon]="expanded() ? 'pi pi-chevron-up' : 'pi pi-chevron-down'"
+          [iconPos]="expanded() ? 'left' : 'right'"
+          class="p-button-text p-button-sm"
+          (onClick)="toggleExpanded()"
+        />
+        <p-button
+          icon="pi pi-copy"
+          class="p-button-text p-button-sm"
+          title="Copier le prompt"
+          (onClick)="copyToClipboard()"
+        />
+      </div>
+    </div>
     <div class="flex align-items-center justify-content-between gap-2 flex-wrap">
       <div class="flex align-items-center gap-2">
         <span class="font-semibold">{{ score() }}</span>

@@ -8,7 +8,6 @@ import { combineLatest, map, merge, of, shareReplay, Subject, switchMap } from '
 import { CategoriesService } from '../categories.service';
 import { PromptsService } from '../prompts.service';
 import { PromptCardComponent } from '../prompt-card/prompt-card';
-import type { Category } from '../category.model';
 
 @Component({
   selector: 'app-prompt-list',
@@ -26,8 +25,6 @@ export class PromptListComponent {
 
   categories$ = this.categoriesService.getCategories().pipe(shareReplay(1));
 
-  categories = signal<Category[]>([]);
-
   prompts$ = merge(of(undefined), this.refreshPrompts$).pipe(
     switchMap(() => this.promptsService.getPrompts()),
     shareReplay(1)
@@ -38,17 +35,9 @@ export class PromptListComponent {
     toObservable(this.selectedCategoryId)
   ]).pipe(
     map(([prompts, categoryId]) =>
-      categoryId == null ? prompts : prompts.filter((p) => p.categoryId === categoryId)
+      categoryId == null ? prompts : prompts.filter((p) => p.category.id === categoryId)
     )
   );
-
-  constructor() {
-    this.categories$.subscribe((cats) => this.categories.set(cats));
-  }
-
-  getCategory(categoryId: number): Category | null {
-    return this.categories().find((c) => c.id === categoryId) ?? null;
-  }
 
   onVoted() {
     this.refreshPrompts$.next();

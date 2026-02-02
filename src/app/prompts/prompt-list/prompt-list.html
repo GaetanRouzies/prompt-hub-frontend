@@ -16,7 +16,7 @@
       <div class="col-12 md:col-6 lg:col-4">
         <app-prompt-card
           [prompt]="prompt"
-          [category]="getCategory(prompt.categoryId)"
+          [category]="prompt.category"
           (voted)="onVoted()"
         />
       </div>
