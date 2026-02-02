@@ -1,0 +1,29 @@
+<header class="p-3 shadow-2 mb-3">
+  <div class="container flex align-items-center justify-content-between">
+    <a routerLink="/" class="navbar-logo flex align-items-center gap-2 font-bold text-2xl">
+      <img src="/logo-prompt-hub.png" alt="Logo Hub Prompts IA" width="36" height="36" />
+      Prompt Hub
+    </a>
+    <nav class="flex align-items-center gap-2 ml-auto">
+      @if (auth.isLoggedIn()) {
+        <span class="text-color-secondary text-sm">{{ auth.currentUser()?.username }}</span>
+        <p-button
+          label="Déconnexion"
+          icon="pi pi-sign-out"
+          severity="secondary"
+          size="small"
+          (onClick)="auth.logout()"
+        />
+      } @else {
+        <p-button
+          routerLink="/login"
+          label="Connexion"
+          icon="pi pi-sign-in"
+          severity="secondary"
+          size="small"
+        />
+      }
+      <p-button routerLink="/prompts/add" label="Ajouter" icon="pi pi-plus" size="small"></p-button>
+    </nav>
+  </div>
+</header>

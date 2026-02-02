@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
-import { Toast } from 'primeng/toast';
+import { Component } from '@angular/core'
+import { RouterOutlet } from '@angular/router'
+import { Toast } from 'primeng/toast'
+import { NavbarComponent } from './navbar/navbar'
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, ButtonModule, Toast],
+  imports: [RouterOutlet, Toast, NavbarComponent],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
 })
 export class App {}

@@ -1,51 +1,67 @@
 <p-card>
-  <div class="flex flex-column gap-2">
-    <div class="flex align-items-center justify-content-between gap-2 flex-wrap">
-      <h3 class="m-0 text-lg font-semibold">{{ prompt().title }}</h3>
-      @if (category(); as cat) {
-        <p-tag [value]="cat.name" severity="secondary" />
+  <div class="flex align-items-center justify-content-between gap-2 mb-2">
+    <div>
+      <h3 class="m-0">{{ prompt().title }}</h3>
+      <span class="text-color-secondary text-sm">Par &#64;{{ prompt().author.username }}</span>
+    </div>
+    <div class="flex gap-2">
+      @if (canEdit) {
+        <p-button
+          [routerLink]="['/prompts', prompt().id, 'edit']"
+          icon="pi pi-pencil"
+          size="small"
+          text="true"
+        />
       }
+      <p-button
+        icon="pi pi-copy"
+        text="true"
+        size="small"
+        title="Copier le prompt"
+        (onClick)="copyToClipboard()"
+      />
     </div>
-    <div class="prompt-content-wrapper">
-      <textarea
-        pTextarea
-        class="prompt-textarea w-full text-sm"
-        [rows]="expanded() ? 16 : 4"
-        [ngModel]="prompt().content"
-        readonly
-      ></textarea>
-      <div class="flex align-items-center gap-1 mt-1">
-        <p-button
-          [label]="expanded() ? 'Réduire' : 'Lire la suite'"
-          [icon]="expanded() ? 'pi pi-chevron-up' : 'pi pi-chevron-down'"
-          [iconPos]="expanded() ? 'left' : 'right'"
-          class="p-button-text p-button-sm"
-          (onClick)="toggleExpanded()"
-        />
-        <p-button
-          icon="pi pi-copy"
-          class="p-button-text p-button-sm"
-          title="Copier le prompt"
-          (onClick)="copyToClipboard()"
-        />
-      </div>
-    </div>
-    <div class="flex align-items-center justify-content-between gap-2 flex-wrap">
-      <div class="flex align-items-center gap-2">
-        <span class="font-semibold">{{ score() }}</span>
-        <span class="text-color-secondary text-sm">score</span>
+  </div>
+  <textarea
+    pTextarea
+    class="w-full text-sm mb-2"
+    [rows]="8"
+    [value]="prompt().content"
+    readonly
+  ></textarea>
+  <div class="flex align-items-center gap-2 justify-content-between">
+    <p-tag [value]="prompt().category.name" severity="secondary" />
+
+    <div class="flex align-items-center gap-2">
+      @if (canVote) {
         <p-button
           icon="pi pi-thumbs-up"
-          [loading]="voting"
+          size="small"
+          [severity]="displayUserVote() === 'up' ? 'primary' : 'secondary'"
           (onClick)="upvote()"
         />
+        <span class="font-semibold">{{ displayScore() }}</span>
         <p-button
           icon="pi pi-thumbs-down"
-          [loading]="voting"
+          size="small"
+          [severity]="displayUserVote() === 'down' ? 'primary' : 'secondary'"
           (onClick)="downvote()"
         />
-      </div>
-      <p-button [routerLink]="['/prompts', prompt().id, 'edit']" label="Modifier" icon="pi pi-pencil" class="p-button-sm"></p-button>
+      } @else {
+        <p-button
+          icon="pi pi-thumbs-up"
+          size="small"
+          [disabled]="true"
+          title="Connectez-vous pour voter"
+        />
+        <span class="font-semibold">{{ displayScore() }}</span>
+        <p-button
+          icon="pi pi-thumbs-down"
+          size="small"
+          [disabled]="true"
+          title="Connectez-vous pour voter"
+        />
+      }
     </div>
   </div>
 </p-card>

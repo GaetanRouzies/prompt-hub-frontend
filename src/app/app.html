@@ -1,11 +1,5 @@
-<header class="p-3 shadow-2">
-  <div class="flex align-items-center justify-content-between">
-    <a routerLink="/" class="font-bold text-2xl">Hub Prompts IA</a>
-    <nav class="flex align-items-center gap-2 ml-auto">
-      <p-button routerLink="/prompts" label="Liste" icon="pi pi-list"></p-button>
-      <p-button routerLink="/prompts/add" label="Ajouter" icon="pi pi-plus"></p-button>
-    </nav>
-  </div>
-</header>
-<router-outlet />
+<app-navbar />
+<main class="container">
+  <router-outlet />
+</main>
 <p-toast />

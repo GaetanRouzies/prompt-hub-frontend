@@ -2,11 +2,15 @@
 @import 'primeflex/primeflex.css';
 
 body {
-    padding: 0;
-    margin: 0;
-    font-family: 'Space Grotesk', sans-serif;
+  padding: 0;
+  margin: 0;
+  font-family: 'Space Grotesk', sans-serif;
 }
 
 .container {
-    max-width: 40rem;
+  max-width: 40rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
