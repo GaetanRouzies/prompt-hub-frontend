@@ -52,7 +52,9 @@ export class PromptFormComponent {
   })
 
   constructor() {
-    this.categoriesService.getCategories().subscribe((categories) => this.categories.set(categories))
+    this.categoriesService
+      .getCategories()
+      .subscribe((categories) => this.categories.set(categories))
 
     toObservable(this.promptId)
       .pipe(

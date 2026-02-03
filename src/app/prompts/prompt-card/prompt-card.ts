@@ -13,14 +13,7 @@ import type { Prompt } from '../prompt.model'
 
 @Component({
   selector: 'app-prompt-card',
-  imports: [
-    CardModule,
-    ButtonModule,
-    TagModule,
-    TextareaModule,
-    FormsModule,
-    RouterLink,
-  ],
+  imports: [CardModule, ButtonModule, TagModule, TextareaModule, FormsModule, RouterLink],
   templateUrl: './prompt-card.html',
   styleUrl: './prompt-card.scss',
 })

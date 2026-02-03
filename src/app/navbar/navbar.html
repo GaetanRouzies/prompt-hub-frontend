@@ -1,14 +1,14 @@
-<header class="shadow-primary p-3 mb-3">
+<header class="shadow-primary p-3 mb-4">
   <div class="container flex align-items-center justify-content-between">
     <a routerLink="/" class="navbar-logo flex align-items-center gap-2">
-      <img ngSrc="/logo-prompt-hub.png" alt="Logo Hub Prompts IA" width="36" height="36" />
+      <img ngSrc="/logo-prompt-hub.png" alt="Logo Prompt Hub" width="36" height="36" />
       Prompt Hub
       <p-button
-      [icon]="isDark() ? 'pi pi-sun' : 'pi pi-moon'"
-      severity="secondary"
-      size="small"
-      (onClick)="toggleDark()"
-    />
+        [icon]="isDark() ? 'pi pi-sun' : 'pi pi-moon'"
+        severity="secondary"
+        size="small"
+        (onClick)="toggleDark()"
+      />
     </a>
     <nav class="flex align-items-center gap-2 ml-auto">
       @if (auth.currentUser(); as currentUser) {

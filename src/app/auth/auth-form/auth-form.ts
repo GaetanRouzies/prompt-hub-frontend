@@ -9,13 +9,7 @@ import { AuthService } from '../auth.service'
 
 @Component({
   selector: 'app-auth-form',
-  imports: [
-    ReactiveFormsModule,
-    InputTextModule,
-    PasswordModule,
-    ButtonModule,
-    CardModule,
-  ],
+  imports: [ReactiveFormsModule, InputTextModule, PasswordModule, ButtonModule, CardModule],
   templateUrl: './auth-form.html',
   styleUrl: './auth-form.scss',
 })
@@ -42,7 +36,7 @@ export class AuthFormComponent {
   submit(): void {
     this.form.markAllAsTouched()
     if (this.form.invalid) return
-    
+
     this.submitting.set(true)
     const { username, password } = this.form.getRawValue()
     if (this.mode() === 'login') {
