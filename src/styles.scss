@@ -1,6 +1,3 @@
-@import 'primeicons/primeicons.css';
-@import 'primeflex/primeflex.css';
-
 body {
   padding: 0;
   margin: 0;
@@ -13,13 +10,4 @@ body {
   margin-right: auto;
   padding-left: 1rem;
   padding-right: 1rem;
-}
-
-.invalid-feedback {
-  display: none;
-}
-.ng-invalid.ng-touched + .invalid-feedback,
-.ng-invalid.ng-dirty + .invalid-feedback {
-  display: block;
-  color: var(--p-error-color);
 }
