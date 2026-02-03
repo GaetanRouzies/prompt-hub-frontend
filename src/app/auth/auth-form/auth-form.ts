@@ -5,6 +5,7 @@ import { InputTextModule } from 'primeng/inputtext'
 import { PasswordModule } from 'primeng/password'
 import { ButtonModule } from 'primeng/button'
 import { CardModule } from 'primeng/card'
+import { MessageService } from 'primeng/api'
 import { AuthService } from '../auth.service'
 
 @Component({
@@ -16,6 +17,7 @@ import { AuthService } from '../auth.service'
 export class AuthFormComponent {
   private readonly router = inject(Router)
   private readonly auth = inject(AuthService)
+  private readonly messageService = inject(MessageService)
 
   mode = signal<'login' | 'register'>('login')
 
@@ -40,14 +42,34 @@ export class AuthFormComponent {
     this.submitting.set(true)
     const { username, password } = this.form.getRawValue()
     if (this.mode() === 'login') {
-      this.auth.login(username, password).subscribe(() => {
-        this.submitting.set(false)
-        this.router.navigate(['/prompts'])
+      this.auth.login(username, password).subscribe({
+        next: () => {
+          this.submitting.set(false)
+          this.router.navigate(['/prompts'])
+        },
+        error: () => {
+          this.submitting.set(false)
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erreur',
+            detail: 'Connexion impossible. Réessayez.',
+          })
+        },
       })
     } else {
-      this.auth.register(username, password).subscribe(() => {
-        this.submitting.set(false)
-        this.router.navigate(['/prompts'])
+      this.auth.register(username, password).subscribe({
+        next: () => {
+          this.submitting.set(false)
+          this.router.navigate(['/prompts'])
+        },
+        error: () => {
+          this.submitting.set(false)
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erreur',
+            detail: 'Connexion impossible. Réessayez.',
+          })
+        },
       })
     }
   }
