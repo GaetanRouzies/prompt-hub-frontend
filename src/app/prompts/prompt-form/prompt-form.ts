@@ -35,8 +35,8 @@ export class PromptFormComponent {
   categoriesService = inject(CategoriesService)
   messageService = inject(MessageService)
 
-  /** Bound from route param :id when navigating to prompts/:id/edit */
-  id = input<string>()
+  /** Bound from route param :promptId when navigating to prompts/:promptId/edit */
+  promptId = input<string>()
 
   categories = signal<Category[]>([])
   loading = signal(true)
@@ -52,41 +52,38 @@ export class PromptFormComponent {
   })
 
   constructor() {
-    this.categoriesService.getCategories().subscribe({ next: (data) => this.categories.set(data) })
+    this.categoriesService.getCategories().subscribe((categories) => this.categories.set(categories))
 
-    toObservable(this.id)
+    toObservable(this.promptId)
       .pipe(
-        tap((idParam) => {
-          if (idParam === undefined) this.loading.set(false)
+        tap((promptIdParam) => {
+          if (promptIdParam === undefined) this.loading.set(false)
           else this.loading.set(true)
         }),
-        switchMap((idParam) => {
-          if (idParam === undefined) return EMPTY
-          const id = Number(idParam)
-          if (Number.isNaN(id)) {
+        switchMap((promptIdParam) => {
+          if (promptIdParam === undefined) return EMPTY
+          const promptId = Number(promptIdParam)
+          if (Number.isNaN(promptId)) {
             this.loading.set(false)
             return EMPTY
           }
-          return this.promptsService.getPrompt(id)
+          return this.promptsService.getPrompt(promptId)
         }),
         takeUntilDestroyed(),
       )
-      .subscribe({
-        next: (p) => {
-          const user = this.authService.currentUser()
-          if (user && p.author.id !== user.id) {
-            this.router.navigate(['/prompts'])
-            this.loading.set(false)
-            return
-          }
-          this.form.patchValue({
-            title: p.title,
-            content: p.content,
-            categoryId: p.category.id,
-          })
+      .subscribe((prompt) => {
+        const user = this.authService.currentUser()
+        if (user && prompt.author.id !== user.id) {
+          this.router.navigate(['/prompts'])
           this.loading.set(false)
-        },
-        error: () => this.loading.set(false),
+          return
+        }
+        this.form.patchValue({
+          title: prompt.title,
+          content: prompt.content,
+          categoryId: prompt.category.id,
+        })
+        this.loading.set(false)
       })
   }
 
@@ -95,36 +92,30 @@ export class PromptFormComponent {
       this.form.markAllAsTouched()
       return
     }
-    const idParam = this.id()
+    const promptIdParam = this.promptId()
     const value = this.form.getRawValue()
     if (value.categoryId == null) return
     this.submitting.set(true)
-    if (idParam != null) {
-      const id = Number(idParam)
+    if (promptIdParam != null) {
+      const promptId = Number(promptIdParam)
       this.promptsService
-        .updatePrompt(id, {
+        .updatePrompt(promptId, {
           title: value.title,
           content: value.content,
           categoryId: value.categoryId,
         })
-        .subscribe({
-          next: () => {
-            this.messageService.add({ severity: 'success', summary: 'Prompt mis à jour' })
-            this.router.navigate(['/prompts'])
-            this.submitting.set(false)
-          },
-          error: () => this.submitting.set(false),
+        .subscribe(() => {
+          this.messageService.add({ severity: 'success', summary: 'Prompt mis à jour' })
+          this.router.navigate(['/prompts'])
+          this.submitting.set(false)
         })
     } else {
       this.promptsService
         .createPrompt({ title: value.title, content: value.content, categoryId: value.categoryId })
-        .subscribe({
-          next: () => {
-            this.messageService.add({ severity: 'success', summary: 'Prompt créé' })
-            this.router.navigate(['/prompts'])
-            this.submitting.set(false)
-          },
-          error: () => this.submitting.set(false),
+        .subscribe(() => {
+          this.messageService.add({ severity: 'success', summary: 'Prompt créé' })
+          this.router.navigate(['/prompts'])
+          this.submitting.set(false)
         })
     }
   }

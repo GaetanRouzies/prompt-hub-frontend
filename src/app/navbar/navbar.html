@@ -1,14 +1,19 @@
-<header class="p-3 shadow-2 mb-3">
+<header class="navbar-header p-3 mb-3">
   <div class="container flex align-items-center justify-content-between">
-    <a routerLink="/" class="navbar-logo flex align-items-center gap-2 font-bold text-2xl">
-      <img src="/logo-prompt-hub.png" alt="Logo Hub Prompts IA" width="36" height="36" />
+    <a routerLink="/" class="navbar-logo flex align-items-center gap-2">
+      <img ngSrc="/logo-prompt-hub.png" alt="Logo Hub Prompts IA" width="36" height="36" />
       Prompt Hub
+      <p-button
+      [icon]="isDark() ? 'pi pi-sun' : 'pi pi-moon'"
+      severity="secondary"
+      size="small"
+      (onClick)="toggleDark()"
+    />
     </a>
     <nav class="flex align-items-center gap-2 ml-auto">
-      @if (auth.isLoggedIn()) {
-        <span class="text-color-secondary text-sm">{{ auth.currentUser()?.username }}</span>
+      @if (auth.currentUser(); as currentUser) {
+        <span class="text-color-secondary text-sm">{{ currentUser.username }}</span>
         <p-button
-          label="Déconnexion"
           icon="pi pi-sign-out"
           severity="secondary"
           size="small"
@@ -16,7 +21,7 @@
         />
       } @else {
         <p-button
-          routerLink="/login"
+          routerLink="/auth"
           label="Connexion"
           icon="pi pi-sign-in"
           severity="secondary"

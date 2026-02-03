@@ -1,77 +1,50 @@
-import { Injectable, signal, computed } from '@angular/core'
+import { Injectable, signal, inject } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Router } from '@angular/router'
-import { tap } from 'rxjs'
+import { tap, catchError, of } from 'rxjs'
+import type { Observable } from 'rxjs'
 import { environment } from '../../environments/environment'
-
-const TOKEN_KEY = 'token'
-
-export interface CurrentUser {
-  id: number
-  username: string
-}
+import type { CurrentUser } from './current-user.model'
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private tokenSignal = signal<string | null>(this.getStoredToken())
+  private readonly http = inject(HttpClient)
+  private readonly router = inject(Router)
+  private readonly userSignal = signal<CurrentUser | null>(null)
 
-  constructor(
-    private readonly http: HttpClient,
-    private readonly router: Router,
-  ) {}
+  readonly currentUser = this.userSignal.asReadonly()
 
-  readonly token = this.tokenSignal.asReadonly()
-  readonly isLoggedIn = computed(() => !!this.tokenSignal())
-  readonly currentUser = computed<CurrentUser | null>(() => {
-    const t = this.tokenSignal()
-    if (!t) return null
-    try {
-      const payload = JSON.parse(atob(t.split('.')[1]))
-      return { id: payload.sub, username: payload.username ?? '' }
-    } catch {
-      return null
-    }
-  })
-
-  getToken(): string | null {
-    return this.tokenSignal()
+  /** Load current user from cookie (used at app init and after login/register). */
+  loadUser(): Observable<CurrentUser | null> {
+    return this.http
+      .get<CurrentUser>(`${environment.appUrl}/auth/me`)
+      .pipe(
+        tap((user) => this.userSignal.set(user)),
+        catchError(() => {
+          this.userSignal.set(null)
+          return of(null)
+        }),
+      )
   }
 
   login(username: string, password: string) {
     return this.http
-      .post<{ access_token: string }>(`${environment.appUrl}/auth/login`, {
-        username,
-        password,
-      })
-      .pipe(
-        tap((res) => {
-          localStorage.setItem(TOKEN_KEY, res.access_token)
-          this.tokenSignal.set(res.access_token)
-        }),
-      )
+      .post<CurrentUser>(`${environment.appUrl}/auth/login`, { username, password })
+      .pipe(tap((user) => this.userSignal.set(user)))
   }
 
   register(username: string, password: string) {
     return this.http
-      .post<{ access_token: string }>(`${environment.appUrl}/auth/register`, {
-        username,
-        password,
-      })
-      .pipe(
-        tap((res) => {
-          localStorage.setItem(TOKEN_KEY, res.access_token)
-          this.tokenSignal.set(res.access_token)
-        }),
-      )
+      .post<CurrentUser>(`${environment.appUrl}/auth/register`, { username, password })
+      .pipe(tap((user) => this.userSignal.set(user)))
   }
 
   logout(): void {
-    localStorage.removeItem(TOKEN_KEY)
-    this.tokenSignal.set(null)
-    this.router.navigate(['/prompts'])
+    this.http.post(`${environment.appUrl}/auth/logout`, {}).subscribe(() => this.clearAndNavigate())
   }
 
-  private getStoredToken(): string | null {
-    return localStorage.getItem(TOKEN_KEY)
+  private clearAndNavigate(): void {
+    this.userSignal.set(null)
+    this.router.navigate(['/prompts'])
   }
 }

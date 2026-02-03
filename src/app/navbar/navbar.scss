@@ -1,5 +1,14 @@
-// Logo + title link: no underline, inherit text color
+// Primary-colored shadow (replaces shadow-2)
+.navbar-header {
+  --navbar-shadow-color: color-mix(in srgb, var(--p-primary-500, #6366f1) 25%, transparent);
+  box-shadow:
+    0 4px 6px -1px var(--navbar-shadow-color),
+    0 2px 4px -2px color-mix(in srgb, var(--p-primary-500, #6366f1) 15%, transparent);
+}
+
 .navbar-logo {
   text-decoration: none;
   color: inherit;
+  font-size: 1.5rem;
+  font-weight: 600;
 }

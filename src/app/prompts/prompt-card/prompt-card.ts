@@ -36,9 +36,9 @@ export class PromptCardComponent {
 
   constructor() {
     effect(() => {
-      const p = this.prompt()
-      this.displayScore.set(p.score)
-      this.displayUserVote.set(p.userVote ?? null)
+      const prompt = this.prompt()
+      this.displayScore.set(prompt.score)
+      this.displayUserVote.set(prompt.userVote ?? null)
     })
   }
 
@@ -48,7 +48,7 @@ export class PromptCardComponent {
   }
 
   get canVote(): boolean {
-    return this.authService.isLoggedIn()
+    return !!this.authService.currentUser()
   }
 
   copyToClipboard(): void {
@@ -63,17 +63,17 @@ export class PromptCardComponent {
 
   upvote(): void {
     if (!this.canVote) return
-    this.promptsService.upvotePrompt(this.prompt().id).subscribe((updated) => {
-      this.displayScore.set(updated.score)
-      this.displayUserVote.set(updated.userVote ?? null)
+    this.promptsService.upvotePrompt(this.prompt().id).subscribe((updatedPrompt) => {
+      this.displayScore.set(updatedPrompt.score)
+      this.displayUserVote.set(updatedPrompt.userVote ?? null)
     })
   }
 
   downvote(): void {
     if (!this.canVote) return
-    this.promptsService.downvotePrompt(this.prompt().id).subscribe((updated) => {
-      this.displayScore.set(updated.score)
-      this.displayUserVote.set(updated.userVote ?? null)
+    this.promptsService.downvotePrompt(this.prompt().id).subscribe((updatedPrompt) => {
+      this.displayScore.set(updatedPrompt.score)
+      this.displayUserVote.set(updatedPrompt.userVote ?? null)
     })
   }
 }

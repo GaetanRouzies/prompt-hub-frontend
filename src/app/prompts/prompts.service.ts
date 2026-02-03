@@ -12,7 +12,7 @@ export class PromptsService {
   getPrompts() {
     return this.httpClient
       .get<Prompt[]>(`${environment.appUrl}/prompts`)
-      .pipe(map((prompts) => [...prompts].sort((a, b) => b.score - a.score)))
+      .pipe(map((prompts) => [...prompts].sort((promptA, promptB) => promptB.score - promptA.score)))
   }
 
   getPrompt(id: number) {

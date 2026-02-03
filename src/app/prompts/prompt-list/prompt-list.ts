@@ -27,7 +27,7 @@ export class PromptListComponent {
 
   filteredPrompts$ = combineLatest([this.prompts$, toObservable(this.selectedCategoryId)]).pipe(
     map(([prompts, categoryId]) =>
-      categoryId == null ? prompts : prompts.filter((p) => p.category.id === categoryId),
+      categoryId == null ? prompts : prompts.filter((prompt) => prompt.category.id === categoryId),
     ),
   )
 }

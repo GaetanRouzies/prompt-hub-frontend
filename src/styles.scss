@@ -14,3 +14,12 @@ body {
   padding-left: 1rem;
   padding-right: 1rem;
 }
+
+.invalid-feedback {
+  display: none;
+}
+.ng-invalid.ng-touched + .invalid-feedback,
+.ng-invalid.ng-dirty + .invalid-feedback {
+  display: block;
+  color: var(--p-error-color);
+}
