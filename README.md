@@ -1,5 +1,3 @@
-[![Catalyseur Angular](assets/catalyseur-angular-banner.png)](https://pim.ms/64hypvI)
-
 # Prompt Hub — Frontend
 
 Application Angular pour **Prompt Hub** : partage et découverte de prompts (liste, création, édition, votes, catégories).
