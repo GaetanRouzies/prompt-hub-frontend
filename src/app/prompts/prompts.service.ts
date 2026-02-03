@@ -23,10 +23,7 @@ export class PromptsService {
     return this.httpClient.post<Prompt>(`${environment.appUrl}/prompts`, prompt)
   }
 
-  updatePrompt(
-    id: number,
-    prompt: Partial<{ title: string; content: string; categoryId: number }>,
-  ) {
+  updatePrompt(id: number, prompt: { title: string; content: string; categoryId: number }) {
     return this.httpClient.patch<Prompt>(`${environment.appUrl}/prompts/${id}`, prompt)
   }
 

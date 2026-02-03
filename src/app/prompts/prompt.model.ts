@@ -6,5 +6,5 @@ export interface Prompt {
   createdAt: string
   category: { id: number; name: string }
   author: { id: number; username: string }
-  userVote?: 'up' | 'down' | null
+  userVote: 'up' | 'down' | null
 }

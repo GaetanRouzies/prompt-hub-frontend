@@ -1,5 +1,5 @@
 import { Component, input, inject, signal, effect } from '@angular/core'
-import { RouterLink } from '@angular/router'
+import { Router, RouterLink } from '@angular/router'
 import { FormsModule } from '@angular/forms'
 import { CardModule } from 'primeng/card'
 import { ButtonModule } from 'primeng/button'
@@ -28,6 +28,7 @@ export class PromptCardComponent {
   authService = inject(AuthService)
   promptsService = inject(PromptsService)
   messageService = inject(MessageService)
+  router = inject(Router)
 
   prompt = input.required<Prompt>()
 
@@ -38,17 +39,13 @@ export class PromptCardComponent {
     effect(() => {
       const prompt = this.prompt()
       this.displayScore.set(prompt.score)
-      this.displayUserVote.set(prompt.userVote ?? null)
+      this.displayUserVote.set(prompt.userVote)
     })
   }
 
   get canEdit(): boolean {
     const user = this.authService.currentUser()
     return !!user && this.prompt().author.id === user.id
-  }
-
-  get canVote(): boolean {
-    return !!this.authService.currentUser()
   }
 
   copyToClipboard(): void {
@@ -62,18 +59,24 @@ export class PromptCardComponent {
   }
 
   upvote(): void {
-    if (!this.canVote) return
+    if (!this.authService.currentUser()) {
+      this.router.navigate(['/auth'])
+      return
+    }
     this.promptsService.upvotePrompt(this.prompt().id).subscribe((updatedPrompt) => {
       this.displayScore.set(updatedPrompt.score)
-      this.displayUserVote.set(updatedPrompt.userVote ?? null)
+      this.displayUserVote.set(updatedPrompt.userVote)
     })
   }
 
   downvote(): void {
-    if (!this.canVote) return
+    if (!this.authService.currentUser()) {
+      this.router.navigate(['/auth'])
+      return
+    }
     this.promptsService.downvotePrompt(this.prompt().id).subscribe((updatedPrompt) => {
       this.displayScore.set(updatedPrompt.score)
-      this.displayUserVote.set(updatedPrompt.userVote ?? null)
+      this.displayUserVote.set(updatedPrompt.userVote)
     })
   }
 }

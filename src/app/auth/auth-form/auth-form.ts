@@ -23,7 +23,7 @@ export class AuthFormComponent {
   private readonly router = inject(Router)
   private readonly auth = inject(AuthService)
 
-  isLogin = signal(true)
+  mode = signal<'login' | 'register'>('login')
 
   form = new FormGroup({
     username: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
@@ -36,7 +36,7 @@ export class AuthFormComponent {
   submitting = signal(false)
 
   toggleMode(): void {
-    this.isLogin.update((value) => !value)
+    this.mode.update((value) => (value === 'login' ? 'register' : 'login'))
   }
 
   submit(): void {
@@ -45,7 +45,7 @@ export class AuthFormComponent {
     
     this.submitting.set(true)
     const { username, password } = this.form.getRawValue()
-    if (this.isLogin()) {
+    if (this.mode() === 'login') {
       this.auth.login(username, password).subscribe(() => {
         this.submitting.set(false)
         this.router.navigate(['/prompts'])

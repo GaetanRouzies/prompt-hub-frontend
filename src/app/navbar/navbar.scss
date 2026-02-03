@@ -1,9 +1,7 @@
-// Primary-colored shadow (replaces shadow-2)
-.navbar-header {
-  --navbar-shadow-color: color-mix(in srgb, var(--p-primary-500, #6366f1) 25%, transparent);
+.shadow-primary {
   box-shadow:
-    0 4px 6px -1px var(--navbar-shadow-color),
-    0 2px 4px -2px color-mix(in srgb, var(--p-primary-500, #6366f1) 15%, transparent);
+    0 4px 6px -1px var(--p-primary-500),
+    0 2px 4px -2px color-mix(in srgb, var(--p-primary-500) 15%, transparent);
 }
 
 .navbar-logo {

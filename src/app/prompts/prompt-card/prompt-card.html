@@ -33,35 +33,19 @@
     <p-tag [value]="prompt().category.name" severity="secondary" />
 
     <div class="flex align-items-center gap-2">
-      @if (canVote) {
-        <p-button
-          icon="pi pi-thumbs-up"
-          size="small"
-          [severity]="displayUserVote() === 'up' ? 'primary' : 'secondary'"
-          (onClick)="upvote()"
-        />
-        <span class="font-semibold">{{ displayScore() }}</span>
-        <p-button
-          icon="pi pi-thumbs-down"
-          size="small"
-          [severity]="displayUserVote() === 'down' ? 'primary' : 'secondary'"
-          (onClick)="downvote()"
-        />
-      } @else {
-        <p-button
-          icon="pi pi-thumbs-up"
-          size="small"
-          [disabled]="true"
-          title="Connectez-vous pour voter"
-        />
-        <span class="font-semibold">{{ displayScore() }}</span>
-        <p-button
-          icon="pi pi-thumbs-down"
-          size="small"
-          [disabled]="true"
-          title="Connectez-vous pour voter"
-        />
-      }
+      <p-button
+        icon="pi pi-thumbs-up"
+        size="small"
+        [severity]="displayUserVote() === 'up' ? 'primary' : 'secondary'"
+        (onClick)="upvote()"
+      />
+      <span class="font-semibold">{{ displayScore() }}</span>
+      <p-button
+        icon="pi pi-thumbs-down"
+        size="small"
+        [severity]="displayUserVote() === 'down' ? 'primary' : 'secondary'"
+        (onClick)="downvote()"
+      />
     </div>
   </div>
 </p-card>
