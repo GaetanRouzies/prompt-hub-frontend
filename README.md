@@ -1,4 +1,6 @@
-[![Catalyseur Angular](assets/catalyseur-angular-banner.png)](https://pim.ms/64hypvI)
+<a href="https://pim.ms/64hypvI" target="_blank" rel="noopener noreferrer">
+  <img src="assets/catalyseur-angular-banner.png" alt="Catalyseur Angular" style="border-radius: 6px;" />
+</a>
 
 # Prompt Hub — Frontend
 
