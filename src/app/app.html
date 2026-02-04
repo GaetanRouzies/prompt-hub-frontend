@@ -1,3 +1,32 @@
 <div class="container">
-  <h1>Bienvenue sur Angular !</h1>
+  <h2>Text Interpolation et Binding</h2>
+  <div>{{ title }}</div>
+  <input type="checkbox" [checked]="isChecked">
+
+  <h2>Events</h2>
+  <div>Count : {{ count }}</div>
+  <button class="btn btn-primary" (click)="increment()">Increment count</button>
+  <input class="form-control" type="text" (keydown)="logKeyDownEvent($event)" />
+
+  <h2>Two-Way Databinding</h2>
+  <div>Input value : {{ inputValue }}</div>
+  <input class="form-control" type="text" [(ngModel)]="inputValue">
+  <button class="btn btn-primary" (click)="inputValue = ''">
+    Reset value
+  </button>
+
+  <h2>Control Flow</h2>
+  <!-- if -->
+  @if (a > b) {
+    {{ a }} is greater than {{ b }}
+  } @else if (b > a) {
+    {{ a }} is less than {{ b }}
+  } @else {
+    {{ a }} is equal to {{ b }}
+  }
+
+  <!-- for -->
+  @for (person of people; track person.id) {
+    <div>{{ $odd }} - {{ person.name }} is {{ person.age }} years old</div>
+  }
 </div>
