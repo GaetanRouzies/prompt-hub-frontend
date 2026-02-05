@@ -5,6 +5,7 @@ import { InputTextModule } from 'primeng/inputtext'
 import { PasswordModule } from 'primeng/password'
 import { ButtonModule } from 'primeng/button'
 import { CardModule } from 'primeng/card'
+import { MessageService } from 'primeng/api'
 import { AuthService } from '../auth.service'
 
 @Component({
@@ -16,8 +17,10 @@ import { AuthService } from '../auth.service'
 export class AuthFormComponent {
   private readonly router = inject(Router)
   private readonly auth = inject(AuthService)
+  private readonly messageService = inject(MessageService)
 
   mode = signal<'login' | 'register'>('login')
+  submitting = signal(false)
 
   form = new FormGroup({
     username: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
@@ -35,6 +38,7 @@ export class AuthFormComponent {
     this.form.markAllAsTouched()
     if (this.form.invalid) return
 
+    this.submitting.set(true)
     const { username, password } = this.form.getRawValue()
     if (this.mode() === 'login') {
       this.login(username, password)
@@ -45,15 +49,35 @@ export class AuthFormComponent {
 
   login(username: string, password: string) {
     this.auth.login(username, password).subscribe({
-      next: () => this.router.navigate(['/']),
-      error: () => {},
+      next: () => {
+        this.submitting.set(false)
+        this.router.navigate(['/'])
+      },
+      error: () => {
+        this.submitting.set(false)
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erreur',
+          detail: 'Connexion impossible. Réessayez.',
+        })
+      },
     })
   }
 
   register(username: string, password: string) {
     this.auth.register(username, password).subscribe({
-      next: () => this.router.navigate(['/']),
-      error: () => {},
+      next: () => {
+        this.submitting.set(false)
+        this.router.navigate(['/'])
+      },
+      error: () => {
+        this.submitting.set(false)
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erreur',
+          detail: 'Connexion impossible. Réessayez.',
+        })
+      },
     })
   }
 }

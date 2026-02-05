@@ -5,6 +5,7 @@ import { CardModule } from 'primeng/card'
 import { ButtonModule } from 'primeng/button'
 import { TagModule } from 'primeng/tag'
 import { TextareaModule } from 'primeng/textarea'
+import { MessageService } from 'primeng/api'
 import { from } from 'rxjs'
 import { AuthService } from '../../auth/auth.service'
 import { PromptsService } from '../prompts.service'
@@ -19,6 +20,7 @@ import type { Prompt } from '../prompt.model'
 export class PromptCardComponent {
   private readonly authService = inject(AuthService)
   private readonly promptsService = inject(PromptsService)
+  private readonly messageService = inject(MessageService)
   private readonly router = inject(Router)
 
   prompt = input.required<Prompt>()
@@ -40,7 +42,13 @@ export class PromptCardComponent {
   }
 
   copyToClipboard(): void {
-    from(navigator.clipboard.writeText(this.prompt().content)).subscribe()
+    from(navigator.clipboard.writeText(this.prompt().content)).subscribe(() => {
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Copié',
+        detail: 'Prompt copié dans le presse-papiers',
+      })
+    })
   }
 
   upvote(): void {

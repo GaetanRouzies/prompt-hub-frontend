@@ -1,5 +1,11 @@
-<p-card [header]="promptId() ? 'Modifier le prompt' : 'Nouveau prompt'">
-  <form [formGroup]="form" (ngSubmit)="submit()">
+@if (loading()) {
+  <p class="flex align-items-center gap-2">
+    <i class="pi pi-spin pi-spinner"></i>
+    Chargement…
+  </p>
+} @else {
+  <p-card [header]="promptId() ? 'Modifier le prompt' : 'Nouveau prompt'">
+    <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="field">
       <label for="title">Titre</label>
       <input pInputText id="title" formControlName="title" class="w-full" />
@@ -39,6 +45,7 @@
           severity="danger"
           icon="pi pi-trash"
           size="small"
+          [loading]="deleting()"
           (onClick)="deletePrompt()"
         />
       }
@@ -54,7 +61,9 @@
         [label]="promptId() ? 'Enregistrer' : 'Créer'"
         icon="pi pi-check"
         size="small"
+        [loading]="submitting()"
       />
     </div>
   </form>
-</p-card>
+  </p-card>
+}
