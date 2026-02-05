@@ -16,16 +16,17 @@ import { PromptCardComponent } from '../prompt-card/prompt-card'
   styleUrl: './prompt-list.scss',
 })
 export class PromptListComponent {
-  categoriesService = inject(CategoriesService)
-  promptsService = inject(PromptsService)
+  private readonly categoriesService = inject(CategoriesService)
+  private readonly promptsService = inject(PromptsService)
 
   selectedCategoryId = signal<number | null>(null)
 
-  categories$ = this.categoriesService.getCategories().pipe(shareReplay(1))
+  categories$ = this.categoriesService.getCategories()
 
-  prompts$ = this.promptsService.getPrompts().pipe(shareReplay(1))
-
-  filteredPrompts$ = combineLatest([this.prompts$, toObservable(this.selectedCategoryId)]).pipe(
+  prompts$ = combineLatest([
+    this.promptsService.getPrompts(),
+    toObservable(this.selectedCategoryId),
+  ]).pipe(
     map(([prompts, categoryId]) =>
       categoryId == null ? prompts : prompts.filter((prompt) => prompt.category.id === categoryId),
     ),

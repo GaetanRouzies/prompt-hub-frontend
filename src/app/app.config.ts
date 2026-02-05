@@ -6,11 +6,9 @@ import {
 } from '@angular/core'
 import { provideRouter, withComponentInputBinding } from '@angular/router'
 import { provideHttpClient, withInterceptors } from '@angular/common/http'
-import { firstValueFrom } from 'rxjs'
 
 import { providePrimeNG } from 'primeng/config'
 import Aura from '@primeuix/themes/aura'
-import { MessageService } from 'primeng/api'
 
 import { routes } from './app.routes'
 import { authInterceptor } from './auth/auth.interceptor'
@@ -38,9 +36,7 @@ const MyPreset = definePreset(Aura, {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideAppInitializer(() => {
-      return inject(AuthService).loadUser()
-    }),
+    provideAppInitializer(() => inject(AuthService).loadUser()),
     providePrimeNG({
       theme: {
         preset: MyPreset,
@@ -51,6 +47,5 @@ export const appConfig: ApplicationConfig = {
     }),
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(withInterceptors([authInterceptor])),
-    MessageService,
   ],
 }

@@ -8,41 +8,39 @@ import type { CurrentUser } from './current-user.model'
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly http = inject(HttpClient)
+  private readonly httpClient = inject(HttpClient)
   private readonly router = inject(Router)
-  private readonly userSignal = signal<CurrentUser | null>(null)
+  private readonly baseUrl = `${environment.appUrl}/auth`
 
-  readonly currentUser = this.userSignal.asReadonly()
+  currentUser = signal<CurrentUser | null>(null)
 
   /** Load current user from cookie (used at app init and after login/register). */
   loadUser(): Observable<CurrentUser | null> {
-    return this.http.get<CurrentUser>(`${environment.appUrl}/auth/me`).pipe(
-      tap((user) => this.userSignal.set(user)),
+    return this.httpClient.get<CurrentUser>(`${this.baseUrl}/me`).pipe(
+      tap((user) => this.currentUser.set(user)),
       catchError(() => {
-        this.userSignal.set(null)
+        this.currentUser.set(null)
         return of(null)
       }),
     )
   }
 
   login(username: string, password: string) {
-    return this.http
-      .post<CurrentUser>(`${environment.appUrl}/auth/login`, { username, password })
-      .pipe(tap((user) => this.userSignal.set(user)))
+    return this.httpClient
+      .post<CurrentUser>(`${this.baseUrl}/login`, { username, password })
+      .pipe(tap((user) => this.currentUser.set(user)))
   }
 
   register(username: string, password: string) {
-    return this.http
-      .post<CurrentUser>(`${environment.appUrl}/auth/register`, { username, password })
-      .pipe(tap((user) => this.userSignal.set(user)))
+    return this.httpClient
+      .post<CurrentUser>(`${this.baseUrl}/register`, { username, password })
+      .pipe(tap((user) => this.currentUser.set(user)))
   }
 
   logout(): void {
-    this.http.post(`${environment.appUrl}/auth/logout`, {}).subscribe(() => this.clearAndNavigate())
-  }
-
-  private clearAndNavigate(): void {
-    this.userSignal.set(null)
-    this.router.navigate(['/prompts'])
+    this.httpClient.post(`${this.baseUrl}/logout`, {}).subscribe(() => {
+      this.currentUser.set(null)
+      this.router.navigate(['/prompts'])
+    })
   }
 }

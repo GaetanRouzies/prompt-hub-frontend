@@ -21,5 +21,10 @@ body {
 .ng-invalid.ng-touched + .invalid-feedback,
 .ng-invalid.ng-dirty + .invalid-feedback {
   display: block;
-  color: var(--p-error-color);
+  color: var(--p-red-500);
+}
+
+
+.p-inputtext.ng-invalid.ng-touched, .p-textarea.ng-invalid.ng-touched, .p-select.ng-invalid.ng-touched {
+  border-color: var(--p-inputtext-invalid-border-color);
 }

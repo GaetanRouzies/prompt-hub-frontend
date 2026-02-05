@@ -6,9 +6,10 @@ import type { Category } from './category.model'
 
 @Injectable({ providedIn: 'root' })
 export class CategoriesService {
-  httpClient = inject(HttpClient)
+  private readonly httpClient = inject(HttpClient)
+  private readonly baseUrl = `${environment.appUrl}/categories`
 
   getCategories() {
-    return this.httpClient.get<Category[]>(`${environment.appUrl}/categories`)
+    return this.httpClient.get<Category[]>(this.baseUrl)
   }
 }

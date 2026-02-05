@@ -12,7 +12,7 @@
     />
   </div>
   <div class="flex flex-column gap-3">
-    @for (prompt of (filteredPrompts$ | async) ?? []; track prompt.id) {
+    @for (prompt of (prompts$ | async) ?? []; track prompt.id) {
       <app-prompt-card [prompt]="prompt" />
     } @empty {
       <p-card>
