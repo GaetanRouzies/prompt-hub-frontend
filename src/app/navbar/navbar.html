@@ -1,6 +1,6 @@
 <header class="navbar-shadow p-3 mb-4">
   <div class="container flex justify-content-between align-items-center">
-    <a class="navbar-logo flex gap-2 align-items-center">
+    <a routerLink="/" class="navbar-logo flex gap-2 align-items-center">
       <img ngSrc="/logo-prompt-hub.png" alt="logo" width="36" height="36" />
       Prompt Hub
     </a>
@@ -11,7 +11,7 @@
         severity="secondary"
         (onClick)="toggleDarkMode()"
       />
-      <p-button label="Ajouter" icon="pi pi-plus" size="small" />
+      <p-button routerLink="/prompts/create" label="Ajouter" icon="pi pi-plus" size="small" />
     </div>
   </div>
 </header>

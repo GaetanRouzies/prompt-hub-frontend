@@ -5,7 +5,12 @@
       <div class="text-sm text-color-secondary">&#64;{{ prompt().author.username }}</div>
     </div>
     <div class="flex gap-2">
-      <p-button icon="pi pi-pencil" size="small" [text]="true" />
+      <p-button
+        [routerLink]="['/prompts', prompt().id, 'edit']"
+        icon="pi pi-pencil"
+        size="small"
+        [text]="true"
+      />
       <p-button icon="pi pi-copy" size="small" [text]="true" (onClick)="copyToClipboard()" />
     </div>
   </div>
