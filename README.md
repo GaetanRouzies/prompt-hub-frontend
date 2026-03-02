@@ -2,22 +2,12 @@
 
 Application Angular pour **Prompt Hub** : partage et découverte de prompts (liste, création, édition, votes, catégories).
 
-Projet pensé pour **apprendre Angular moderne** (standalone, signals, reactive forms, routing, guards, HTTP, etc.) avec un backend API REST proche d’un environnement entreprise.
+Projet pensé pour **apprendre Angular moderne** (standalone, signals, zoneless, formulaires, librairie de composants, routing, guards, authentification, etc.) avec un backend API REST proche d’un environnement entreprise.
 
-## Lancer le projet
-
-```bash
-npm install
-npm start
-```
-
-Ouvre `http://localhost:4200/`. Le backend (NestJS, port 3000) doit tourner pour que l’app fonctionne.
-
-**Backend :** [prompt-hub-backend](https://github.com/GaetanRouzies/prompt-hub-backend)
 
 ## Branches de la formation
 
-Ce dépôt contient des branches de base pour chaque partie de la formation Angular. La branche `main` (par défaut au clone) correspond à `base-1-and-2` — point de départ des parties 1 et 2. Les élèves ne voient pas le projet final. La colonne **Timestamp** indique à quel moment de la vidéo YouTube utiliser chaque base.
+Ce dépôt contient des branches de base pour chaque partie de la formation Angular. La branche `main` (par défaut lors du clone) correspond à `base-1-and-2` — point de départ des parties 1 et 2. La colonne **Timestamp** indique à quel moment de la vidéo YouTube chaque base correspond.
 
 | Branche | Partie | Timestamp | Description |
 |---------|--------|-----------|-------------|
@@ -30,4 +20,16 @@ Ce dépôt contient des branches de base pour chaque partie de la formation Angu
 | `base-7` | 7 | XX:XX | Finition |
 | `final` | — | — | État final du projet (référence / correction) |
 
-**Utilisation :** au clone, vous êtes sur `main` (= `base-1-and-2`). Pour une autre partie : `git checkout base-N`. La branche `final` contient le projet complet une fois toutes les parties terminées.
+**Utilisation :** lors du git clone, vous êtes sur `main` (= `base-1-and-2`). Pour une autre partie : `git checkout base-N`. La branche `final` contient le projet complet une fois toutes les parties terminées.
+
+
+## Lancer le projet
+
+```bash
+npm install
+npm start
+```
+
+Ouvre `http://localhost:4200/`. Le backend (NestJS, port 3000) doit tourner pour que l’app fonctionne.
+
+**Backend :** [prompt-hub-backend](https://github.com/GaetanRouzies/prompt-hub-backend)
