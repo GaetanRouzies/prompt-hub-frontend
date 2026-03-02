@@ -12,10 +12,12 @@
     </div>
     <div class="flex gap-2 justify-content-end">
       <p-button
+        [loading]="submitting()"
         severity="secondary"
         (onClick)="toggleMode()"
         [label]="mode() === 'login' ? 'Créer un compte' : 'Se connecter'"/>
       <p-button
+        [loading]="submitting()"
         type="submit"
         [label]="mode() === 'login' ? 'Connexion' : 'Créer le compte'"/>
     </div>

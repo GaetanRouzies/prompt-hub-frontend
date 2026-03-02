@@ -13,16 +13,24 @@
           [text]="true"
         />
       }
-      <p-button icon="pi pi-copy" size="small" [text]="true" (onClick)="copyToClipboard()" />
+      <p-button icon="pi pi-copy" size="small" [text]="true" (onClick)="copyToClipboard()"/>
     </div>
   </div>
   <textarea pTextarea readonly class="w-full mb-2" rows="8">{{ prompt().content }}</textarea>
   <div class="flex justify-content-between align-items-center">
-    <p-tag [value]="prompt().category.name" severity="secondary" />
+    <p-tag [value]="prompt().category.name" severity="secondary"/>
     <div class="flex gap-2 align-items-center">
-      <p-button severity="secondary" icon="pi pi-thumbs-up" size="small" />
-      <span>{{ prompt().score }}</span>
-      <p-button severity="secondary" icon="pi pi-thumbs-down" size="small" />
+      <p-button
+        [loading]="voting()"
+        (onClick)="upvote()"
+        [severity]="userVote() === 'up' ? 'primary' : 'secondary'"
+        icon="pi pi-thumbs-up" size="small"/>
+      <span>{{ score() }}</span>
+      <p-button
+        [loading]="voting()"
+        (onClick)="downvote()"
+        [severity]="userVote() === 'down' ? 'primary' : 'secondary'"
+        icon="pi pi-thumbs-down" size="small"/>
     </div>
   </div>
 </p-card>

@@ -10,6 +10,7 @@
         <p-button
           severity="secondary"
           (onClick)="logout()"
+          [loading]="loggingOut()"
           label="Déconnexion"
           size="small" />
       } @else {
@@ -24,7 +25,7 @@
         [icon]="isDark() ? 'pi pi-sun' : 'pi pi-moon'"
         size="small"
         severity="secondary"
-        (onClick)="toggleDarkMode()"
+        (onClick)="isDark.update((value) => !value)"
       />
       <p-button routerLink="/prompts/create" label="Ajouter" icon="pi pi-plus" size="small" />
     </div>

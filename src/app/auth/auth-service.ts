@@ -2,7 +2,7 @@ import { inject, Injectable, signal } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { environment } from '../../environments/environment'
 import { CurrentUser } from './current-user.model'
-import { catchError, of, tap } from 'rxjs'
+import { catchError, delay, of, tap } from 'rxjs'
 
 @Injectable({
   providedIn: 'root',

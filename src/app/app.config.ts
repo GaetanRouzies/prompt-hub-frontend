@@ -8,6 +8,7 @@ import { definePreset } from '@primeuix/themes'
 import { provideHttpClient, withInterceptors } from '@angular/common/http'
 import { authInterceptor } from './auth/auth-interceptor'
 import { AuthService } from './auth/auth-service'
+import { MessageService } from 'primeng/api'
 
 const promptPreset = definePreset(Aura, {
   semantic: {
@@ -23,6 +24,28 @@ const promptPreset = definePreset(Aura, {
       800: '{indigo.800}',
       900: '{indigo.900}',
       950: '{indigo.950}',
+    },
+  },
+  components: {
+    progressspinner: {
+      colorScheme: {
+        light: {
+          root: {
+            colorOne: '{primary.500}',
+            colorTwo: '{primary.500}',
+            colorThree: '{primary.500}',
+            colorFour: '{primary.500}',
+          },
+        },
+        dark: {
+          root: {
+            colorOne: '{primary.500}',
+            colorTwo: '{primary.500}',
+            colorThree: '{primary.500}',
+            colorFour: '{primary.500}',
+          },
+        },
+      },
     },
   },
 })
@@ -41,5 +64,6 @@ export const appConfig: ApplicationConfig = {
         },
       },
     }),
+    MessageService
   ],
 }
