@@ -1,5 +1,7 @@
 # Prompt Hub — Frontend
 
+[Vidéo de la formation](https://youtu.be/3llJm3LO1e4)
+
 Application Angular pour **Prompt Hub** : partage et découverte de prompts (liste, création, édition, votes, catégories).
 
 Projet pensé pour **apprendre Angular moderne** (standalone, signals, zoneless, formulaires, librairie de composants, routing, guards, authentification, etc.) avec un backend API REST proche d’un environnement entreprise.
@@ -11,13 +13,13 @@ Ce dépôt contient des branches de base pour chaque partie de la formation Angu
 
 | Branche | Partie | Timestamp | Description |
 |---------|--------|-----------|-------------|
-| `main` | 1 & 2 | 0:00 | Point de départ (identique à `base-1-and-2`) |
-| `base-1-and-2` | 1 & 2 | 0:00 | Concepts et affichage de données |
-| `base-3` | 3 | XX:XX | Librairie et UX/UI |
-| `base-4` | 4 | XX:XX | Requêtes au back-end |
-| `base-5` | 5 | XX:XX | Formulaire et route |
-| `base-6` | 6 | XX:XX | Authentification |
-| `base-7` | 7 | XX:XX | Finition |
+| `main` | 1 & 2 | [1:43](https://youtu.be/3llJm3LO1e4?t=103) & [42:32](https://youtu.be/3llJm3LO1e4?t=2552) | Point de départ (identique à `base-1-and-2`) |
+| `base-1-and-2` | 1 & 2 | [1:43](https://youtu.be/3llJm3LO1e4?t=103) & [42:32](https://youtu.be/3llJm3LO1e4?t=2552) | Concepts et affichage de données |
+| `base-3` | 3 | [01:05:20](https://youtu.be/3llJm3LO1e4?t=3920) | Librairie et UX/UI |
+| `base-4` | 4 | [01:45:40](https://youtu.be/3llJm3LO1e4?t=6340) | Requêtes au back-end |
+| `base-5` | 5 | [02:03:49](https://youtu.be/3llJm3LO1e4?t=7429) | Formulaire et route |
+| `base-6` | 6 | [02:47:08](https://youtu.be/3llJm3LO1e4?t=10028) | Authentification |
+| `base-7` | 7 | [03:26:52](https://youtu.be/3llJm3LO1e4?t=12412) | Finition |
 | `final` | — | — | État final du projet (référence / correction) |
 
 **Utilisation :** lors du git clone, vous êtes sur `main` (= `base-1-and-2`). Pour une autre partie : `git checkout base-N`. La branche `final` contient le projet complet une fois toutes les parties terminées.
